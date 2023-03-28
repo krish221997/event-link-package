@@ -1,5 +1,5 @@
 {
-  "name": "@krishp/event-link",
+  "name": "react-event-link-package",
   "version": "1.0.0",
   "description": "A React hook wrapper for Event Link.",
   "files": [

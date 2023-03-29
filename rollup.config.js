@@ -5,10 +5,12 @@ import typescript from 'rollup-plugin-typescript2';
 import copy from 'rollup-plugin-copy';
 import pkg from './package.json';
 import { terser } from 'rollup-plugin-terser';
+import json from "@rollup/plugin-json";
+
 
 export default {
   input: 'src/index.ts',
-  external: ['react', 'prop-types', "axios"],
+  external: ['react', 'prop-types'],
   output: [
     { file: pkg.main, format: 'cjs' },
     { file: pkg.module, format: 'es' },
@@ -22,13 +24,16 @@ export default {
       targets: [{ src: 'src/types', dest: 'dist' }],
     }),
     resolve(),
+    json(),
     babel({
       babelHelpers: 'bundled',
       extensions: ['.ts', '.js', '.tsx', '.jsx'],
+      exclude: "node_modules/**",
     }),
     commonjs({
       namedExports: {
-        "react-dom": ["createPortal"]
+        'react/jsx-runtime': ['jsx', 'jsxs'],
+        'react-dom': ['createPortal']
       }
     }),
     terser(),
